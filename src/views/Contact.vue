@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="section-5">
-            <h4 class="blue-text center">Tambien nos puedes encontrar en las redes sociales</h4>
+            <h4 class="blue-text center">También nos puedes encontrar en las redes sociales</h4>
             <div class="row center section-5">
                 <div class="col s4">
                     <i class="fab blue-text text-darken-4 fa-facebook-square social-icon"></i>

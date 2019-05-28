@@ -6,25 +6,25 @@ header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
  
-// include database and object files
+// include base de datos y object files
 include_once '../config/database.php';
 include_once '../objects/usuarios.php';
  
-// get database connection
+// conexión base de datos
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare product object
+// preparar objeto de producto
 $product = new Product($db);
  
-// set ID property of record to read
+// establcer la propiedad de id a leer
 $product->idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : die();
  
-// read the details of product to be edited
+// leer los detalles del producto a ser modificado
 $product->readOne();
 
 if($product->name!=null){
-    // create array
+    // crear array
     $product_arr = array(
         "idUsuario" => $product->idUsuario, 
         "name" => $product->name,
@@ -33,18 +33,18 @@ if($product->name!=null){
         "create_time" => $product->create_time
     );
  
-    // set response code - 200 OK
+    // codigo de respuesta - 200 OK
     http_response_code(200);
  
-    // make it json format
+    // hacerlo formato json
     echo json_encode($product_arr);
 }
  
 else{
-    // set response code - 404 Not found
+    //codigo de repsuesta - 404 Not found
     http_response_code(404);
  
-    // tell the user product does not exist
+    // notificar que producto de usuario no existe +
     echo json_encode(array("message" => "User does not exist"));
 }
 ?>

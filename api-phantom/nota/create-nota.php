@@ -1,11 +1,11 @@
 <?php
-// required headers
+// headers requeridos
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
  
-// get database connection
+// conexión base de datos
 include_once '../config/database.php';
-// instantiate product object
+// instanciar objeto producto
 include_once '../objects/nota.php';
  
 $database = new Database();
@@ -13,41 +13,41 @@ $db = $database->getConnection();
  
 $product = new Product($db);
  
-// get posted data
+// obtener datos posteados
 $data = json_decode(file_get_contents("php://input"));
  
-// make sure data is not empty
+// verificar que los datos no están vacios
 if(
     !empty($data->idUsuario) &&
     !empty($data->titulo) &&
     !empty($data->contenido)
     ){
  
-    // set product property values
+    // poner a lor productos valores adecuados
     $product->titulo = $data->titulo;
     $product->contenido = $data->contenido;
     $product->idUsuario = $data->idUsuario;
  
-    // create the product
+    // crear el producto
     if($product->create()){
-        // set response code - 201 created
+        // codigo de respuesta - 201 creado
         http_response_code(201);
-        // tell the user
+        // decirle al usuario
         echo json_encode(array("message" => "Nota was created"));
     }
-    // if unable to create the product, tell the user
+    // si no se puede crear el producto, notificar al usuario
     else{
-        // set response code - 503 service unavailable
+        // codigo de respuesta - 503 servicio no disponible
         http_response_code(503);
-        // tell the user
+        // notificar al usuario
         echo json_encode(array("message" => "Unable to create nota"));
     }
 }
-// tell the user data is incomplete
+// NOtificar al usuario que los datos están incompletos
 else{
-    // set response code - 400 bad request
+    // scodigo de respueta - 400 bad request
     http_response_code(400);
-    // tell the user
+    // notificar al usuario
     echo json_encode(array("message" => "Unable to create nota. Data is incomplete."));
 }
 ?>

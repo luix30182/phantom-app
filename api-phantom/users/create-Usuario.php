@@ -3,9 +3,9 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
  
-// get database connection
+// conexión connection
 include_once '../config/database.php';
-// instantiate product object
+// instanciar el objeto producto
 include_once '../objects/usuarios.php';
  
 $database = new Database();
@@ -13,10 +13,10 @@ $db = $database->getConnection();
  
 $product = new Product($db);
  
-// get posted data
+// obtener datos 
 $data = json_decode(file_get_contents("php://input"));
  
-// make sure data is not empty
+// asegurarse que los datos no estén vacios
 if(
     !empty($data->name) &&
     !empty($data->email) &&
@@ -29,24 +29,24 @@ if(
     $product->password = $data->password;
     // create the product
     if($product->create()){
-        // set response code - 201 created
+        //codigo de respuesta - 201 created
         http_response_code(201);
-        // tell the user
+        // notificar al usuario
         echo json_encode(array("message" => "User was created"));
     }
-    // if unable to create the product, tell the user
+    // si no se puede crear producto, notifica al usuario
     else{
-        // set response code - 503 service unavailable
+        // codigo de respuesta - 503 service unavailable
         http_response_code(503);
-        // tell the user
+        // notifica al usuario
         echo json_encode(array("message" => "Unable to create user"));
     }
 }
-// tell the user data is incomplete
+// Notifica al usuario de que los datos están incompletos
 else{
-    // set response code - 400 bad request
+    // codigo de respuesta - 400 bad request
     http_response_code(400);
-    // tell the user
+    // notifica al usuario
     echo json_encode(array("message" => "Unable to create user. Data is incomplete."));
 }
 ?>
