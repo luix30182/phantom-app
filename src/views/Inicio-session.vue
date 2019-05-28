@@ -68,23 +68,30 @@ export default {
     },
     methods:{
         login: function(){
+            //Se verifica que los campos no esten vacios
             if(this.email.length > 0 && this.password.length > 0){
+            //Con la funcion fetch y el API se obtiene una lista de usuarios, esta lista no contiene las contraseñas
              fetch('/api-phantom/users/read-Usuario.php')
             .then(response => response.json())
             .then(data => {
+                //en holder se guarda la lista de los uduarios
                 const holder = Array.from(data['records'])
                 let userHolder;
                 let flag = false;
+                //en el array se busca al usuario con el email que se requiere
                 holder.forEach(element => {
+                    //si se encuestra el email en la lista, atravez del API se obtienen los datos completos del uduario, esta vez con la contraseña incluida
                     if(element['email'] === this.email){
                         flag = true;
                         fetch(`/api-phantom/users/readOne-Usuario.php?idUsuario=${element['idUsuario']}`)
                         .then(blob => blob.json())
                         .then(data => userHolder = data)
                         .then(() =>{
+                            //Si la contraseña coincide se da acceso a la lista de notas que le pertencen al usuario
                             if(this.password === userHolder['password']){
                                 router.push({ name: 'lista-nota', params: { user: element['idUsuario'] } })
                             }else{
+                                //de lo contrario se muestra un mensaje, indicando que no se puede iniciar sesion 
                                 this.alert = !this.alert
                                 setTimeout(() => {
                                     this.alert = !this.alert
@@ -94,6 +101,7 @@ export default {
                     }
                 });
                 if(!flag){
+                    //En caso de que los campos esten vacios se muestra un mensaje de error
                     this.alert = !this.alert
                     setTimeout(() => {
                         this.alert = !this.alert

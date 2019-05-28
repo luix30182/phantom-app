@@ -13,13 +13,8 @@
           </router-link>
           <ul class="right hide-on-med-and-down">
             <li>
-              <router-link to="/inicio-session">
-                <a class="blue darken-4">Inicia sesion</a>
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/registro">
-                <a>Registrate</a>
+              <router-link to="/">
+                <a class="blue darken-4">Cerrar sesion</a>
               </router-link>
             </li>
             <li>

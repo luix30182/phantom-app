@@ -6,8 +6,6 @@ import 'materialize-css/dist/css/materialize.css'
 import 'materialize-css/dist/js/materialize'
 import router from './router'
 
-// import Materialize from '../node_modules/materialize-css/dist/js/materialize'
-
 Vue.config.productionTip = false
 
 new Vue({

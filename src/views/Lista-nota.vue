@@ -39,7 +39,6 @@
 
 <script>
 import router from "../router";
-import { createHash } from 'crypto';
 import Footer from '@/components/Footer'
 import MenuL from '@/components/Menu-Loged'
 
@@ -86,34 +85,56 @@ export default {
             rootElement.removeChild(notaRow)
           }
         })
+    },
+    editNote: function(e){
+        //Guarda el elemento base que contiene el Id de la nota 
+        const elementId = e.target.parentElement.parentElement;
+        //el Id de la nota esta guardadado en el dataset notde el elemento, se guarda
+        const idNota = elementId.dataset.note;
+        let notaEditar = null;
+        this.userNotes.forEach(nota =>{
+          if(nota['idNota'] == idNota){
+            notaEditar = nota;
+          }
+        });
+        // Se manda a la ventana de edicion con el Id de nota correspondiente
+        router.push({ name: 'nota', params: { nota:  notaEditar} })
     }
   },
   created() {
+    /*Al momento en el que se crea la vista trata de guardar el id del usuario
+    */
     try{
       this.user = parseInt(this.$route.params.user);
     }catch(e){
+      //Se muestra un mensaje en caso de que no se encuentre el Id del usuario
       console.log('Problema con el Id del usuario')
     }
     try{
+      //Ya que se tiene un Id, utilizando la funcion fetch se obtienen los datos del usuario
       fetch(`/api-phantom/users/readOne-Usuario.php?idUsuario=${this.user}`)
       .then(res => res.json())
       .then(data => {
         this.user = data;
     })
     }catch(e){
+      //Se muestra un problema en caso de no poder recuperar la información
       console.log('Problema al tratar de leer la información')
     }
-
+    //Ya que se tienen todos los datos del usuario, se optienen las notas
     fetch("/api-phantom/nota/all-notas.php")
       .then(blob => blob.json())
       .then(data => {
+        //Se guardan las notas en una vareiable local
         this.userNotes.push(...Array.from(data["records"]));
       });
+      //Con la funcion filter se guardan solo las notas que pertenecen al usuario y se muestran en la lista 
     this.userNotes = this.userNotes.filter(
       nota => nota["idUsuario"] === this.user["idUsuario"]
     );
   },
   mounted(){
+    //Para poder tener la funcionalidad de poder abrir las vistas,se inicializa la funcion del framework materialize
     M.AutoInit();
   }
 };

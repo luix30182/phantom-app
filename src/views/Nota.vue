@@ -32,29 +32,58 @@ export default {
       date: null,
       title: '',
       contenido: '',
-      idUsuario: null
+      idUsuario: null,
+      idNota: null,
+      //Esta variable permite diferenciar entre crear una nota nueva y editar una 
+      editMode: false
     }
   },
   methods:{
     createNote: function(){
+      //Se crea un objeto con los datos de la nota
       const nota = {};
       nota['titulo'] = this.title;
       nota['contenido'] = this.contenido;
-      nota['idUsuario'] = this.idUsuario;
-      const data = JSON.stringify(nota)
-      fetch('/api-phantom/nota/create-nota.php', {
-        method: "POST", // or 'PUT'
-        body: data, // data can be `string` or {object}!
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data['message'] === 'Nota was created'){
-          router.push({ name: 'lista-nota', params: { user: this.idUsuario } })
-        }
-      })
+      if(!this.editMode){
+      //Si no se esta editando una nota, se crea un JOSON con el Id del usuario
+        nota['idUsuario'] = this.idUsuario;
+        const data = JSON.stringify(nota);
+        //Utilizando la funcion fetch, se crea la nota utlizando el API
+        fetch('/api-phantom/nota/create-nota.php', {
+          method: "POST", // or 'PUT'
+          body: data, // data can be `string` or {object}!
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          if(data['message'] === 'Nota was created'){
+            //Si se recibe el mensaje Nota was created, se regresa a la vista de notas
+            router.push({ name: 'lista-nota', params: { user: this.idUsuario } })
+          }
+        })
+      }else{
+        //Si se esta editando una nota se crea un JSON con el Id de la nota en lugar del de usuario
+        nota['idNota'] = this.idNota;
+        const data = JSON.stringify(nota)
+        //De igual manera haciendo uso de la funcion fetch y el API se actaliza la nota
+        fetch('/api-phantom/nota/update-nota.php', {
+           method: "POST", // or 'PUT'
+           body: data, // data can be `string` or {object}!
+           headers: {
+             "Content-Type": "application/json"
+           }
+         })
+         .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if(data['message'] === 'Nota was updated'){  
+            //Si la nota se pudo actualizar, se regresa a la vista de lista de notas
+            router.push({ name: 'lista-nota', params: { user: this.idUsuario } })
+          }
+        })
+      }
     }
   },
   created(){
@@ -64,6 +93,16 @@ export default {
     const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     const yyyy = today.getFullYear();
     this.date = mm + '/' + dd + '/' + yyyy;
+    try{
+      const nota = this.$route.params.nota;
+      this.title = nota['titulo'];
+      this.contenido = nota['contenido'];
+      this.idUsuario = parseInt(nota['idUsuario'])
+      this.idNota = parseInt(nota['idNota'])
+      this.editMode = true;
+    }catch(e){
+      // console.log()
+    }
   }
 }
 </script>

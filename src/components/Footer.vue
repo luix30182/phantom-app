@@ -37,13 +37,7 @@
   </div>
 </template>
 <style scoped>
-.page-footer{
-  position:absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  z-index: -10000;
-}
+
 </style>
 <script>
 export default {
