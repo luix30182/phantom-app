@@ -39,7 +39,6 @@
 
 <script>
 import router from "../router";
-import { createHash } from 'crypto';
 import Footer from '@/components/Footer'
 import MenuL from '@/components/Menu-Loged'
 
