@@ -4,52 +4,52 @@ header('Access-Control-Allow-Methods: GET, POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
 class Product{
  
-    // database connection and table name
+    // conexion de base de datos y table name
     private $conn;
     private $table_name = "`nota`";
  
-    // object properties
+    // propiedades objecto
     public $titulo;
     public $contenido;
     public $idNota;
     public $idUsuario;
 
     
-    // constructor with $db as database connection
+    // constructor con $db como conexión de base de datos
     public function __construct($db){
         $this->conn = $db;
     }
 
-    // read products
+    // leer productos
     function read(){
-        // select all query
+        // seleccionar todas query
         $query = "SELECT `titulo`,`contenido`,`idNota`,`idUsuario`FROM" .$this->table_name;
-        // prepare query statement
+        // preparar query statement
         $stmt = $this->conn->prepare($query);
-        // execute query
+        // executar query
         $stmt->execute();
         return $stmt;
     }
     function read2(){
-        // select all query
+        // seleccionar todo query
         $query = "SELECT * FROM" .$this->table_name;
-        // prepare query statement
+        // preparar query statement
         $stmt = $this->conn->prepare($query);
-        // execute query
+        // executar query
         $stmt->execute();
         return $stmt;   
     }
 
     function create(){
-        // query to insert record
+        // query a registro insrtado
         $query = "INSERT INTO ". $this->table_name . "(`titulo`, `contenido`, `idUsuario`) VALUES(
             '$this->titulo',
             '$this->contenido',
             $this->idUsuario)";
         // echo $query;
-        // prepare query
+        // preparar query
         $stmt = $this->conn->prepare($query);
-        // execute query
+        // executar query
         if($stmt->execute()){
             return true;
         }
@@ -59,48 +59,48 @@ class Product{
         function readOne(){
             // select all query
             $query = "SELECT `titulo`,`contenido`,`idUsuario` FROM $this->table_name WHERE idNota =  $this->idNota";
-            // prepare query statement
+            // preparar query statement
             $stmt = $this->conn->prepare($query);
-            // execute query
+            // executar query
             $stmt->execute();
 
-            // get retrieved row
+            // obtener fila extraida
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // set values to object properties
+            // establecer valores a las propiedades de objeto
             $this->titulo = $row['titulo'];
             $this->contenido = $row['contenido'];
             $this->idUsuario = $row['idUsuario'];
         }
 
-        // update the product
+        // actualizar producto
         function update(){
-            // update query
+            // actualizar query
             $query = "UPDATE " . $this->table_name . " SET 
             `titulo` = '$this->titulo',
             `contenido` = '$this->contenido'
             WHERE idNota = $this->idNota ";
-            // prepare query statement
+            // preparar query statement
             $stmt = $this->conn->prepare($query);
 
-            // execute the query
+            // executar el query
             if($stmt->execute()){
                 return true;
             }
         
             return false;
         }
-        // delete the product
+        // eliminar el producto
         function delete(){
-            // delete query
+            // eliminar query
             $query = "DELETE FROM " . $this->table_name . " WHERE idNota = ?";
-            // prepare query
+            // preparar query
             $stmt = $this->conn->prepare($query);
-            // sanitize
+            // limpiar 
             $this->idNota=htmlspecialchars(strip_tags($this->idNota));
-            // bind id of record to delete
+            // enlazar id del registro a eliminar
             $stmt->bindParam(1, $this->idNota);
-            // execute query
+            // executar query
             if($stmt->execute()){
                 return true;
             }

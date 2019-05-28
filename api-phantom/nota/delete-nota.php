@@ -6,40 +6,40 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
-// include database and object file
+// include de base de datos y object files
 include_once '../config/database.php';
 include_once '../objects/nota.php';
  
-// get database connection
+// conexión base de datos
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare product object
+// preparar object producto
 $product = new Product($db);
  
-// get product id
+// get producto id
 $data = json_decode(file_get_contents("php://input"));
  
-// set product id to be deleted
+// set producto id para ser eliminado
 $product->idNota = $data->idNota;
  
-// delete the product
+// eliminar el producto
 if($product->delete()){
  
-    // set response code - 200 ok
+    // codigo de respuesta - 200 ok
     http_response_code(200);
  
-    // tell the user
+    // notificar al usuario
     echo json_encode(array("message" => "Nota was deleted"));
 }
  
-// if unable to delete the product
+// si no es posible eliminar el producto
 else{
  
-    // set response code - 503 service unavailable
+    // codigo de respuesta - 503 service unavailable
     http_response_code(503);
  
-    // tell the user
+    // notificar al usuario
     echo json_encode(array("message" => "Unable to delete nota"));
 }
 ?>
