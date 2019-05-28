@@ -116,6 +116,7 @@ export default {
       .then(res => res.json())
       .then(data => {
         this.user = data;
+
     })
     }catch(e){
       //Se muestra un problema en caso de no poder recuperar la información
@@ -127,11 +128,11 @@ export default {
       .then(data => {
         //Se guardan las notas en una vareiable local
         this.userNotes.push(...Array.from(data["records"]));
+        //Con la funcion filter se guardan solo las notas que pertenecen al usuario y se muestran en la lista 
+        this.userNotes = this.userNotes.filter(
+          nota => nota["idUsuario"] == this.user['idUsuario']
+        );
       });
-      //Con la funcion filter se guardan solo las notas que pertenecen al usuario y se muestran en la lista 
-    this.userNotes = this.userNotes.filter(
-      nota => nota["idUsuario"] === this.user["idUsuario"]
-    );
   },
   mounted(){
     //Para poder tener la funcionalidad de poder abrir las vistas,se inicializa la funcion del framework materialize
