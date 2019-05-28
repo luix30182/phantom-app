@@ -6,23 +6,23 @@
         <div class="row center-align section-5">
             <div class="col s12 m8 offset-m2">
                 <div class="input-field col s12 m6">
-                    <input id="first_name" type="text" class="validate">
+                    <input v-model="name" id="first_name" type="text" class="validate">
                     <label for="first_name">Nombre</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="last_name" type="text" class="validate">
+                    <input v-model="lastName" id="last_name" type="text" class="validate">
                     <label for="last_name">Apellido</label>
                 </div>
                 <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
+                    <input v-model="email" id="email" type="email" class="validate">
                     <label for="email">Email</label>
                 </div>
                 <div class="input-field col s12">
-                    <input id="subject" type="text" class="validate">
+                    <input v-model="subject" id="subject" type="text" class="validate">
                     <label for="subject">Asunto</label>
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="message" class="materialize-textarea"></textarea>
+                    <textarea v-model="message" id="message" class="materialize-textarea"></textarea>
                     <label for="message">Mensaje</label>
                 </div>
                 <a class="waves-effect waves-light btn">Enviar</a>
@@ -54,6 +54,15 @@ export default {
     components:{
         Menu,
         Footer
+    },
+    data(){
+        return{
+            name: '',
+            lastName: '',
+            email: '',
+            subject: '',
+            message: ''
+        }
     }
 }
 </script>

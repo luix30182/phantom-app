@@ -101,13 +101,16 @@ export default {
   },
   methods:{
     registrar: function(){
+      //Se verifica que ningun campo este vacio
       if(this.firstName.length > 0 && this.lastName.length>0 && this.password.length>0 && this.email.length>0){
         const name = this.firstName + ' ' + this.lastName;
+        //se crea un objeto JSON para poder con los datos
         const user = {};
         user['name'] = name;
         user['password'] = this.password;
         user['email'] = this.email;
         const data = JSON.stringify(user)
+        //Utilizando la funcion fetch se manda el JSON para poder registrar al usuario
         fetch('/api-phantom/users/create-Usuario.php', {
           method: "POST", // or 'PUT'
           body: data, // data can be `string` or {object}!
@@ -118,6 +121,10 @@ export default {
         .then(res => res.json())
         .then(data => {
           if(data['message'] === 'User was created'){
+            /*Si el mensaje recibido por el API es User was created, quiere
+              decir que se pudo crear el usuario, los campos se limpian
+              y aparece un mensaje haciendo saber lo que acaba de pasar
+            */
             this.firstName = '';
             this.lastName = '';
             this.password = '';
@@ -129,6 +136,7 @@ export default {
           }
         })
       }else{
+        //En caso de que el usuario no se pueda crear, se notifica con un mensaje
         this.message = !this.message
         setTimeout(() => {
             this.message = !this.message
