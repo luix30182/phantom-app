@@ -1,23 +1,23 @@
 <?php
-// required headers
+// headers requeridos
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
  
-// include database and object files
+// include de base de datos y object files
 include_once '../config/database.php';
 include_once '../objects/nota.php';
  
-// instantiate database and game object
+// instanciar base de datos y game object
 $database = new Database();
 $db = $database->getConnection();
  
-// initialize object
+// inicializar objeto
 $product = new Product($db);
-// query products
+// query productos
 $stmt = $product->read();
 $num = $stmt->rowCount();
 
-// check if more than 0 record found
+// revisar si más de 0 registros son encontrados
 if($num>0){
     $products_arr=array();
     $products_arr["records"]=array();
@@ -31,8 +31,8 @@ if($num>0){
         );
         array_push($products_arr["records"], $product_item);
     } 
-    // set response code - 200 OK
+    // codigo de respuesta - 200 OK
     http_response_code(200);
-    // show products data in json format
+    // mostrar los datos del producto en formato json
     echo json_encode($products_arr);
 }

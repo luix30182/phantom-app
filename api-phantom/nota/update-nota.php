@@ -6,44 +6,44 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
-// include database and object files
+// include de base de datos y object files
 include_once '../config/database.php';
 include_once '../objects/nota.php';
  
-// get database connection
+// get conexión base de datos
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare product object
+// preparar object producto
 $product = new Product($db);
  
-// get id of product to be edited
+// obtener el id del producto a ser editado
 $data = json_decode(file_get_contents("php://input"));
  
-// set ID property of product to be edited
+// establecer la propiedad del id del producto a modificar
 $product->idNota = $data->idNota;
  
 // set product property values
 $product->titulo = $data->titulo;
 $product->contenido = $data->contenido;
  
-// update the product
+// actualizar el producto
 if($product->update()){
  
-    // set response code - 200 ok
+    // codigo de respuesta - 200 ok
     http_response_code(200);
  
-    // tell the user
+    // notificar al usuario
     echo json_encode(array("message" => "Nota was updated"));
 }
  
-// if unable to update the product, tell the user
+// si no se puede actualizar, notifica al usuario
 else{
  
-    // set response code - 503 service unavailable
+    // establece codigo de respuesta - 503 service unavailable
     http_response_code(503);
  
-    // tell the user
+    // notifica al usuario
     echo json_encode(array("message" => "Unable to update nota"));
 }
 ?>

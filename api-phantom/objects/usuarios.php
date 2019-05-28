@@ -58,15 +58,15 @@ class Product{
         return false;
     }
     function update(){
-        // update query
+        // actualizar query
         $query = "UPDATE " . $this->table_name . " SET 
         `name` = '$this->name',
         `password` = '$this->password',
         `email` = '$this->email' WHERE idUsuario = $this->idUsuario";
-        // prepare query statement
+        // preparar query statement
         echo $query;
         $stmt = $this->conn->prepare($query);
-        // execute the query
+        // executar the query
         if($stmt->execute()){
             return true;
         }
