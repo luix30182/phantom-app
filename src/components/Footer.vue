@@ -18,22 +18,12 @@
               </li>
               <li>
                 <router-link to="/inicio-session">
-                  <a class="grey-text text-lighten-3">Inica secion</a>
+                  <a class="grey-text text-lighten-3">Inica sesion</a>
                 </router-link>
               </li>
               <li>
                 <router-link to="/contact">
                   <a class="grey-text text-lighten-3">Contacto</a>
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/nota">
-                  <a class="grey-text text-lighten-3">Notas</a>
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/lista">
-                  <a class="grey-text text-lighten-3">Lista de Notas</a>
                 </router-link>
               </li>
             </ul>
@@ -46,7 +36,15 @@
     </footer>
   </div>
 </template>
-
+<style scoped>
+.page-footer{
+  position:absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -10000;
+}
+</style>
 <script>
 export default {
     name: 'Footer',
@@ -57,4 +55,3 @@ export default {
     }
 }
 </script>
-

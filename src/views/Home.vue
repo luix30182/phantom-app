@@ -1,17 +1,20 @@
 <template>
   <div class="home">
-    <Main/>
+    <Menu/>
+    <Principal/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Main from '@/components/Main'
+import Principal from '@/components/Principal'
+import Menu from '@/components/Menu'
 
 export default {
-  name: 'main',
+  name: 'Home',
   components: {
-    Main
+    Menu,
+    Principal
   }
 }
 </script>

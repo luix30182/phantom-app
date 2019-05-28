@@ -130,7 +130,7 @@
 
 <script>
 export default {
-    name: 'Main',
+    name: 'Principal',
     data(){
         return{
             

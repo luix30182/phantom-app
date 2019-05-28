@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Menu/>
         <div class="container">
         <h4 class="blue-text center">Ponte en contacto con nosotros!</h4>
         <div class="row center-align section-5">
@@ -42,5 +43,17 @@
             </div>
         </div>
     </div>
+    <Footer/>
     </div>
 </template>
+<script>
+import Menu from '@/components/Menu'
+import Footer from '@/components/Footer'
+
+export default {
+    components:{
+        Menu,
+        Footer
+    }
+}
+</script>

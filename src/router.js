@@ -13,7 +13,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/phantom-app',
+      path: '/',
       name: 'home',
       component: Home
     },

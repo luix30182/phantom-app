@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <Menu/>
-    <router-view/>
-    <Footer/>
+    <router-view class="all"></router-view>
   </div>
 </template>
 <style>
+.all{
+  height: 100vh;
+}
 p {
   font-size: 20px;
 }
@@ -78,13 +79,3 @@ textarea.materialize-textarea{height: 10rem;
 }
 </style>
 
-<script>
-import Menu from '@/components/Menu'
-import Footer from '@/components/Footer'
-export default {
-  components:{
-    Menu,
-    Footer
-  }
-}
-</script>
